@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Girlfriend?</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffe6e9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%;
+        }
+        h1 {
+            color: #d63384;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+            position: relative;
+        }
+        button {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s, font-size 0.2s;
+        }
+        #yes-btn {
+            background-color: #ff4d6d;
+            color: white;
+            font-weight: bold;
+        }
+        #no-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1 id="question">Will you be my girlfriend? 💖</h1>
+        <div class="buttons">
+            <button id="yes-btn" onclick="handleYes()">Yes!</button>
+            <button id="no-btn" onclick="handleNo()">No</button>
+        </div>
+    </div>
+
+    <script>
+        // Optional: Replace this with your Formspree/Web3Forms endpoint to get an email notification
+        const FETCH_URL = "YOUR_FORMSPREE_OR_WEB3FORMS_ENDPOINT_HERE";
+
+        const persuasiveMessages = [
+            "Are you sure? Think again! 🥺",
+            "What if I buy you coffee/food? 🧋",
+            "Are you absolutely sure?? 💕",
+            "Give it another thought! ✨",
+            "You're making a mistake! 😉",
+            "Pretty please? 🌹",
+            "Just press Yes already! ❤️"
+        ];
+
+        let messageIndex = 0;
+        let yesScale = 1;
+
+        function handleNo() {
+            const question = document.getElementById('question');
+            const yesBtn = document.getElementById('yes-btn');
+            
+            // Cycle through convincing messages
+            question.innerText = persuasiveMessages[messageIndex];
+            messageIndex = (messageIndex + 1) % persuasiveMessages.length;
+
+            // Make the 'Yes' button grow larger each time 'No' is pressed
+            yesScale += 0.35;
+            yesBtn.style.transform = `scale(${yesScale})`;
+        }
+
+        function handleYes() {
+            const card = document.querySelector('.card');
+            card.innerHTML = `
+                <h1>Yay! You made my day! 🎉💖🥰</h1>
+                <p>Thanks for saying yes! 🥰</p>
+            `;
+
+            // Automatically sends the notification to your endpoint
+            if (FETCH_URL && FETCH_URL !== "YOUR_FORMSPREE_OR_WEB3FORMS_ENDPOINT_HERE") {
+                fetch(FETCH_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: "She said YES! 🎉" })
+                }).catch(err => console.error("Notification failed to send:", err));
+            }
+        }
+    </script>
+</body>
+</html>
