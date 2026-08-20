@@ -80,15 +80,15 @@
 
         function handleNo() {
             const question = document.getElementById('question');
-            const yesBtn = document.getElementById('yes-btn');
+    const yesBtn = document.getElementById('yes-btn');
             
             // Cycle through convincing messages
             question.innerText = persuasiveMessages[messageIndex];
             messageIndex = (messageIndex + 1) % persuasiveMessages.length;
 
-            // Make the 'Yes' button grow larger each time 'No' is pressed
-            yesScale += 0.35;
-            yesBtn.style.transform = `scale(${yesScale})`;
+           // Increase scale, but cap it at a maximum of 2.5x original size
+    yesScale = Math.min(yesScale + 0.35, 2.5);
+    yesBtn.style.transform = `scale(${yesScale})`;
         }
 
         function handleYes() {
