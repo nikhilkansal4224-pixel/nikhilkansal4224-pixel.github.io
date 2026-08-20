@@ -66,7 +66,7 @@
 
     <script>
         // Optional: Replace this with your Formspree/Web3Forms endpoint to get an email notification
-        const FETCH_URL = "YOUR_FORMSPREE_OR_WEB3FORMS_ENDPOINT_HERE";
+        const FETCH_URL = "https://api.web3forms.com/submit";
 
         const persuasiveMessages = [
             "Are you sure? Think again! 🥺",
@@ -95,20 +95,23 @@
         }
 
         function handleYes() {
-            const card = document.querySelector('.card');
-            card.innerHTML = `
-                <h1>Yay! You made my day! 🎉💖🥰</h1>
-                <p>Thanks for saying yes! 🥰</p>
-            `;
+    const card = document.querySelector('.card');
+    card.innerHTML = `
+        <h1>Yay! You made my day! 🎉💖🥰</h1>
+        <p>I'll pick you up soon!</p>
+    `;
 
-            // Automatically sends the notification to your endpoint
-            if (FETCH_URL && FETCH_URL !== "YOUR_FORMSPREE_OR_WEB3FORMS_ENDPOINT_HERE") {
-                fetch(FETCH_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: "She said YES! 🎉" })
-                }).catch(err => console.error("Notification failed to send:", err));
-            }
+    // Sends the email notification to you
+    fetch("https://api.web3forms.com/submit", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            access_key: "8f0a6b65-5ae7-45e0-8e68-d9434f727392", 
+            subject: "She said YES! 🎉",
+            message: "Someone accepted your proposal on your website!" 
+        })
+    }).catch(err => console.error("Notification failed:", err));
+}
         }
     </script>
 </body>
